@@ -1,9 +1,10 @@
 package ca.edtoaster.littlecontraptions.ponder.element;
 
-import com.simibubi.create.foundation.ponder.ElementLink;
-import com.simibubi.create.foundation.ponder.SceneBuilder;
-import com.simibubi.create.foundation.ponder.instruction.FadeIntoSceneInstruction;
-import com.simibubi.create.foundation.ponder.instruction.FadeOutOfSceneInstruction;
+import net.createmod.ponder.api.element.ElementLink;
+import net.createmod.ponder.api.scene.SceneBuilder;
+import net.createmod.ponder.foundation.element.ElementLinkImpl;
+import net.createmod.ponder.foundation.instruction.FadeIntoSceneInstruction;
+import net.createmod.ponder.foundation.instruction.FadeOutOfSceneInstruction;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
@@ -41,7 +42,7 @@ public class VehicleInstructions {
     public <T extends Entity> ElementLink<VehicleElement<T>> createVehicle(Vec3 location, float angle, VehicleElement.EntityConstructor<T> type) {
         VehicleElement<T> cart = new VehicleElement<>(location.subtract(0, 0.5, 0), angle, type);
         @SuppressWarnings("unchecked")
-        ElementLink<VehicleElement<T>> link = new ElementLink<>((Class<VehicleElement<T>>) cart.getClass());
+        ElementLink<VehicleElement<T>> link = new ElementLinkImpl<>((Class<VehicleElement<T>>) cart.getClass());
         builder.addInstruction(new FadeInVehicleInstruction(10, Direction.DOWN, cart));
         builder.addInstruction((scene) -> {
             scene.linkElement(cart, link);

@@ -1,7 +1,7 @@
 package ca.edtoaster.littlecontraptions.ponder.element;
 
-import com.simibubi.create.foundation.ponder.ElementLink;
-import com.simibubi.create.foundation.ponder.instruction.AnimateElementInstruction;
+import net.createmod.ponder.api.element.ElementLink;
+import net.createmod.ponder.foundation.instruction.AnimateElementInstruction;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 

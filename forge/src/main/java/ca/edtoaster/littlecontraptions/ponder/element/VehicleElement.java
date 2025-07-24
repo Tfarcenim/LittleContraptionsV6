@@ -2,10 +2,10 @@ package ca.edtoaster.littlecontraptions.ponder.element;
 
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.simibubi.create.foundation.ponder.PonderScene;
-import com.simibubi.create.foundation.ponder.PonderWorld;
-import com.simibubi.create.foundation.ponder.element.AnimatedSceneElement;
-import com.simibubi.create.foundation.utility.animation.LerpedFloat;
+import net.createmod.catnip.animation.LerpedFloat;
+import net.createmod.ponder.api.level.PonderLevel;
+import net.createmod.ponder.foundation.PonderScene;
+import net.createmod.ponder.foundation.element.AnimatedSceneElementBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
@@ -15,12 +15,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 
-public class VehicleElement<T extends Entity> extends AnimatedSceneElement {
-    private Vec3 location;
-    private LerpedFloat rotation;
+public class VehicleElement<T extends Entity> extends AnimatedSceneElementBase {
+    private final Vec3 location;
+    private final LerpedFloat rotation;
     private T entity;
-    private EntityConstructor<T> constructor;
-    private float initialRotation;
+    private final EntityConstructor<T> constructor;
+    private final float initialRotation;
 
     public VehicleElement(Vec3 location, float rotation, EntityConstructor<T> constructor) {
         //noinspection unchecked
@@ -30,6 +30,7 @@ public class VehicleElement<T extends Entity> extends AnimatedSceneElement {
         this.rotation = LerpedFloat.angular().startWithValue((double)rotation);
     }
 
+    @Override
     public void reset(PonderScene scene) {
         super.reset(scene);
         this.entity.setPosRaw(0.0D, 0.0D, 0.0D);
@@ -42,6 +43,7 @@ public class VehicleElement<T extends Entity> extends AnimatedSceneElement {
         this.rotation.startWithValue((double)this.initialRotation);
     }
 
+    @Override
     public void tick(PonderScene scene) {
         super.tick(scene);
         if (this.entity == null) {
@@ -86,7 +88,7 @@ public class VehicleElement<T extends Entity> extends AnimatedSceneElement {
         return new Vec3(0.0D, (double)this.rotation.getValue(), 0.0D);
     }
 
-    protected void renderLast(PonderWorld world, MultiBufferSource buffer, PoseStack ms, float fade, float pt) {
+    protected void renderLast(PonderLevel world, MultiBufferSource buffer, PoseStack ms, float fade, float pt) {
         EntityRenderDispatcher entityrenderermanager = Minecraft.getInstance().getEntityRenderDispatcher();
         if (this.entity == null) {
             this.entity = this.constructor.create(world, 0.0D, 0.0D, 0.0D);
@@ -94,7 +96,7 @@ public class VehicleElement<T extends Entity> extends AnimatedSceneElement {
 
         ms.pushPose();
         ms.translate(this.location.x, this.location.y, this.location.z);
-        ms.translate(Mth.lerp((double)pt, this.entity.xo, this.entity.getX()), Mth.lerp((double)pt, this.entity.yo, this.entity.getY()), Mth.lerp((double)pt, this.entity.zo, this.entity.getZ()));
+        ms.translate(Mth.lerp(pt, this.entity.xo, this.entity.getX()), Mth.lerp(pt, this.entity.yo, this.entity.getY()), Mth.lerp(pt, this.entity.zo, this.entity.getZ()));
         TransformStack.cast(ms).rotateY((double)this.rotation.getValue(pt));
         entityrenderermanager.render(this.entity, 0.0D, 0.0D, 0.0D, 0.0F, pt, ms, buffer, this.lightCoordsFromFade(fade));
         ms.popPose();

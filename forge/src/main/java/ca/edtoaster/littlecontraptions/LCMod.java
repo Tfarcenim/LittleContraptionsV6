@@ -1,10 +1,11 @@
 package ca.edtoaster.littlecontraptions;
 
 import ca.edtoaster.littlecontraptions.setup.Registration;
-import com.simibubi.create.foundation.ponder.PonderRegistry;
-import com.simibubi.create.foundation.ponder.ui.PonderButton;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,8 +17,15 @@ public class LCMod {
     private static final Logger LOGGER = LogManager.getLogger();
 
     public LCMod() {
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         Registration.register();
-
-        MinecraftForge.EVENT_BUS.register(this);
+        if (FMLEnvironment.dist.isClient()) {
+            bus.addListener(LCClient::setup);
+        }
     }
+
+    public static ResourceLocation id(String path) {
+        return new ResourceLocation(MOD_ID,path);
+    }
+
 }

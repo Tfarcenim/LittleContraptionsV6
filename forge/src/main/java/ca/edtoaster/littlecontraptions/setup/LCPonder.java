@@ -2,29 +2,24 @@ package ca.edtoaster.littlecontraptions.setup;
 
 import ca.edtoaster.littlecontraptions.LCMod;
 import ca.edtoaster.littlecontraptions.block.BargeAssemblerBlock;
-import ca.edtoaster.littlecontraptions.ponder.AssemblerScenes;
-import ca.edtoaster.littlecontraptions.ponder.LocomotiveScenes;
-import ca.edtoaster.littlecontraptions.ponder.TugScenes;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.simibubi.create.foundation.ponder.PonderRegistrationHelper;
-import com.simibubi.create.foundation.ponder.PonderRegistry;
-import com.simibubi.create.foundation.ponder.PonderTag;
-import com.simibubi.create.infrastructure.ponder.AllPonderTags;
+import com.simibubi.create.infrastructure.ponder.AllCreatePonderTags;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.util.entry.RegistryEntry;
 import dev.murad.shipping.setup.ModBlocks;
 import dev.murad.shipping.setup.ModItems;
+import net.createmod.catnip.platform.CatnipServices;
 import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
-import net.createmod.ponder.foundation.PonderTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class LCPonder {
 
-    public static PonderTag LC_TUGS;
-    public static PonderTag LC_LOCOS;
+    public static ResourceLocation LC_TUGS = LCMod.id("tugs");
+    public static ResourceLocation LC_LOCOS = LCMod.id("trains");
 
     private static CreateRegistrate createRegistrate = CreateRegistrate.create(LCMod.MOD_ID);
 
@@ -46,35 +41,40 @@ public class LCPonder {
     public static final ItemEntry<Item> CONTRAPTION_BARGE_ENTRY = new ItemEntry<>(createRegistrate, LCItems.CONTRAPTION_BARGE_ITEM);
 
     public static void register(PonderTagRegistrationHelper<ResourceLocation> helper) {
-        LC_TUGS = createPonderTag("tugs").item(ModItems.STEAM_TUG::get, true, false)
-                .defaultLang("Little Logistics Tugs",
-                        "Water trains with pathfinding!").addToIndex();
 
-        LC_LOCOS = createPonderTag("trains").item(ModItems.STEAM_LOCOMOTIVE::get, true, false)
-                .defaultLang("Little Logistics Trains",
-                        "Small but smart locomotives!").addToIndex();
 
-        PonderRegistrationHelper HELPER = new PonderRegistrationHelper(LCMod.MOD_ID);
+       /* helper.registerTag(KINETIC_RELAYS)
+                .addToIndex()
+                .item(AllBlocks.COGWHEEL.get(), true, false)
+                .title("Kinetic Blocks")
+                .description("Components which help relaying Rotational Force elsewhere")
+                .register();*/
 
-        HELPER.forComponents(BARGE_ASSEMBLER_ENTRY, CONTRAPTION_BARGE_ENTRY)
-                .addStoryBoard("basic_assembler", AssemblerScenes::basicAssemblerScene);
+        helper.registerTag(LC_TUGS)
+                .item(ModItems.STEAM_TUG::get, true, false)
+                .title("Little Logistics Tugs")
+                .description("Water trains with pathfinding!").addToIndex()
+                .register();
 
-        HELPER.forComponents(STEAM_TUG_ITEM_ENTRY, CORNER_GUIDE_RAIL_BLOCK_BLOCK_ENTRY, ENERGY_TUG_ITEM_ENTRY, TUG_ROUTE_ENTRY)
-                .addStoryBoard("basic_tug", TugScenes::basicTugScene);
+        helper.registerTag(LC_LOCOS)
+                .item(ModItems.STEAM_LOCOMOTIVE::get, true, false)
+                .title("Little Logistics Trains")
+                .description("Small but smart locomotives!")
+                .addToIndex()
+                .register();
 
-        HELPER.forComponents(BARGE_DOCK_ENTRY, TUG_DOCK_ENTRY, STEAM_TUG_ITEM_ENTRY, ENERGY_TUG_ITEM_ENTRY)
-                .addStoryBoard("tug_dock", TugScenes::dockingScene);
+        PonderTagRegistrationHelper<RegistryEntry<?>> HELPER = helper.withKeyFunction(RegistryEntry::getId);
 
-        HELPER.forComponents(LOCO_DOCK_ENTRY, CAR_DOCK_ENTRY, STEAM_LOCOMOTIVE_ENTRY, ENERGY_LOCOMOTIVE_ITEM_ENTRY)
-                .addStoryBoard("loco_dock", LocomotiveScenes::dockingScene);
+        PonderTagRegistrationHelper<ItemLike> itemHelper = helper.withKeyFunction(
+                CatnipServices.REGISTRIES::getKeyOrThrow);
 
-        HELPER.forComponents(STEAM_LOCOMOTIVE_ENTRY, ENERGY_LOCOMOTIVE_ITEM_ENTRY, LOCO_ROUTE_ENTRY, AUTO_SWITCH, AUTO_TEE)
-                .addStoryBoard("loco_route", LocomotiveScenes::routeScene);
 
-        PonderRegistry.TAGS.forTag(AllPonderTags.MOVEMENT_ANCHOR)
-                .add(BARGE_ASSEMBLER_ENTRY);
 
-        PonderRegistry.TAGS.forTag(LC_LOCOS)
+        HELPER.addToTag(AllCreatePonderTags.MOVEMENT_ANCHOR)
+                        .add(BARGE_ASSEMBLER_ENTRY);
+
+
+        HELPER.addToTag(LC_LOCOS)
                 .add(LOCO_DOCK_ENTRY)
                 .add(LOCO_ROUTE_ENTRY)
                 .add(STEAM_LOCOMOTIVE_ENTRY)
@@ -83,7 +83,7 @@ public class LCPonder {
                 .add(AUTO_SWITCH)
                 .add(CAR_DOCK_ENTRY);
 
-        PonderRegistry.TAGS.forTag(LC_TUGS)
+        HELPER.addToTag(LC_TUGS)
                 .add(STEAM_TUG_ITEM_ENTRY)
                 .add(CORNER_GUIDE_RAIL_BLOCK_BLOCK_ENTRY)
                 .add(ENERGY_TUG_ITEM_ENTRY)
@@ -94,7 +94,4 @@ public class LCPonder {
                 .add(TUG_ROUTE_ENTRY);
     }
 
-    private static PonderTag createPonderTag(String id) {
-        return new PonderTag(new ResourceLocation(LCMod.MOD_ID, id));
-    }
 }

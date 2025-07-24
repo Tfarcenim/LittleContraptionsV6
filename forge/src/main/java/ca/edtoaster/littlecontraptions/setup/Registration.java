@@ -34,7 +34,5 @@ public class Registration {
         LCBlocks.register();
         LCBlockEntityTypes.register();
         LCEntityTypes.register();
-
-        eventBus.addListener(LCPonder::register);
     }
 }
