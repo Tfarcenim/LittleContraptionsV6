@@ -3,6 +3,7 @@ package ca.edtoaster.littlecontraptions.setup;
 import ca.edtoaster.littlecontraptions.ponder.AssemblerScenes;
 import ca.edtoaster.littlecontraptions.ponder.LocomotiveScenes;
 import ca.edtoaster.littlecontraptions.ponder.TugScenes;
+import com.simibubi.create.foundation.ponder.CreateSceneBuilder;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
@@ -18,7 +19,7 @@ public class LCPonderScenes {
         //HELPER.addTagToComponent();
 
         HELPER.forComponents(BARGE_ASSEMBLER_ENTRY, CONTRAPTION_BARGE_ENTRY)
-                .addStoryBoard("basic_assembler", AssemblerScenes::basicAssemblerScene);
+                .addStoryBoard("basic_assembler", (scene, util) -> AssemblerScenes.basicAssemblerScene(new CreateSceneBuilder(scene), util));
 
         HELPER.forComponents(STEAM_TUG_ITEM_ENTRY, CORNER_GUIDE_RAIL_BLOCK_BLOCK_ENTRY, ENERGY_TUG_ITEM_ENTRY, TUG_ROUTE_ENTRY)
                 .addStoryBoard("basic_tug", TugScenes::basicTugScene);

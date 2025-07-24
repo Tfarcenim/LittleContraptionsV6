@@ -92,9 +92,9 @@ public class LocomotiveScenes {
 
         scene.addKeyframe();
 
-        scene.overlay().showControls((new InputWindowElement(util.vector().topOf(of(4, 0, 3)), Pointing.DOWN))
+        scene.overlay().showControls(util.vector().topOf(of(4, 0, 3)), Pointing.DOWN,30)
                 .rightClick()
-                .withItem(stackOf(ModItems.CONDUCTORS_WRENCH.get())), 30);
+                .withItem(stackOf(ModItems.CONDUCTORS_WRENCH.get()));
 
         Block bargeDock = ModBlocks.CAR_DOCK_RAIL.get();
         BlockState orangeDock = bargeDock.defaultBlockState()
@@ -211,9 +211,9 @@ public class LocomotiveScenes {
 
         scene.idle(100);
 
-        scene.overlay().showControls((new InputWindowElement(util.vector().topOf(of(1, 0, 1)), Pointing.DOWN))
+        scene.overlay().showControls(util.vector().topOf(of(1, 0, 1)), Pointing.DOWN,30)
                 .rightClick()
-                .withItem(stackOf(ModItems.LOCO_ROUTE.get())), 30);
+                .withItem(stackOf(ModItems.LOCO_ROUTE.get()));
 
         scene.overlay().showText(100)
                 .pointAt(util.vector().topOf(of(1, 0, 1)))

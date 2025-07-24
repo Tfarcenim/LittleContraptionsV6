@@ -1,7 +1,7 @@
 package ca.edtoaster.littlecontraptions.ponder.element;
 
-import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
+import dev.engine_room.flywheel.lib.transform.TransformStack;
 import net.createmod.catnip.animation.LerpedFloat;
 import net.createmod.ponder.api.level.PonderLevel;
 import net.createmod.ponder.foundation.PonderScene;
@@ -97,7 +97,7 @@ public class VehicleElement<T extends Entity> extends AnimatedSceneElementBase {
         ms.pushPose();
         ms.translate(this.location.x, this.location.y, this.location.z);
         ms.translate(Mth.lerp(pt, this.entity.xo, this.entity.getX()), Mth.lerp(pt, this.entity.yo, this.entity.getY()), Mth.lerp(pt, this.entity.zo, this.entity.getZ()));
-        TransformStack.cast(ms).rotateY((double)this.rotation.getValue(pt));
+        TransformStack.of(ms).rotateY(this.rotation.getValue(pt));
         entityrenderermanager.render(this.entity, 0.0D, 0.0D, 0.0D, 0.0F, pt, ms, buffer, this.lightCoordsFromFade(fade));
         ms.popPose();
     }

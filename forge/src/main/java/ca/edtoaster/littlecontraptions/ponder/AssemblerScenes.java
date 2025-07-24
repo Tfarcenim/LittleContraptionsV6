@@ -3,6 +3,7 @@ package ca.edtoaster.littlecontraptions.ponder;
 import ca.edtoaster.littlecontraptions.entity.ContraptionBargeEntity;
 import ca.edtoaster.littlecontraptions.ponder.element.VehicleInstructions;
 import ca.edtoaster.littlecontraptions.ponder.element.VehicleElement;
+import com.simibubi.create.foundation.ponder.CreateSceneBuilder;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.element.ElementLink;
 import net.createmod.ponder.api.element.WorldSectionElement;
@@ -14,7 +15,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.phys.Vec3;
 
 public class AssemblerScenes {
-    public static void basicAssemblerScene(SceneBuilder scene, SceneBuildingUtil util) {
+    public static void basicAssemblerScene(CreateSceneBuilder scene, SceneBuildingUtil util) {
         VehicleInstructions bargeInst = new VehicleInstructions(scene);
 
         scene.title("basic_assembler", "Moving Structures using Barge Assemblers");

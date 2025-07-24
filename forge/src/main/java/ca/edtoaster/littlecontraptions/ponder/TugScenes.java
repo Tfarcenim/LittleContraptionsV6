@@ -75,9 +75,13 @@ public class TugScenes {
                 .placeNearTarget()
                 .text("Tugboats can be placed anywhere on water");
         scene.idle(50);
-        scene.overlay().showControls((new InputWindowElement(util.vector().topOf(steamTugInitialPosition), Pointing.DOWN))
+
+        //        scene.overlay().showControls(util.vector().centerOf(center.m_6630_(2)), Pointing.DOWN, 40)
+        //        .rightClick().withItem(AllItems.EMPTY_BLAZE_BURNER.asStack());
+
+        scene.overlay().showControls(util.vector().topOf(steamTugInitialPosition), Pointing.DOWN,50)
                 .rightClick()
-                .withItem(stackOf(ModItems.STEAM_TUG.get())), 50);
+                .withItem(stackOf(ModItems.STEAM_TUG.get()));
         scene.idle(70);
 
         ElementLink<VehicleElement<SteamTugEntity>> steamTug =
@@ -100,13 +104,13 @@ public class TugScenes {
         TugRouteItem.pushRoute(fullTugRoute, 0, 0);
 
         // Simulate right click :)
-        scene.overlay().showControls((new InputWindowElement(util.vector().topOf(waypoint), Pointing.DOWN))
+        scene.overlay().showControls(util.vector().topOf(waypoint), Pointing.DOWN,30)
                 .rightClick()
-                .withItem(emptyTugRoute), 30);
+                .withItem(emptyTugRoute);
         scene.idle(37);
-        scene.overlay().showControls((new InputWindowElement(util.vector().topOf(waypoint), Pointing.DOWN))
+        scene.overlay().showControls(util.vector().topOf(waypoint), Pointing.DOWN,50)
                 .rightClick()
-                .withItem(fullTugRoute), 50);
+                .withItem(fullTugRoute);
         scene.idle(50);
 
         // Render tugroute item on the water
@@ -125,8 +129,8 @@ public class TugScenes {
                 .placeNearTarget()
                 .text("Putting the Tug Route item in the Tug will start its journey!");
         scene.idle(35);
-        scene.overlay().showControls((new InputWindowElement(steamTugInteractPosition.add(0, 1, 0), Pointing.DOWN))
-                .withItem(fullTugRoute), 35);
+        scene.overlay().showControls(steamTugInteractPosition.add(0, 1, 0), Pointing.DOWN,35)
+                .withItem(fullTugRoute);
         scene.idle(45);
 
         // Start moving tugboat
@@ -161,9 +165,9 @@ public class TugScenes {
                 .placeNearTarget()
                 .text("If the corner guide rail is facing the wrong way, shift-right click it to flip it");
         scene.idle(36);
-        scene.overlay().showControls((new InputWindowElement(turnPosition.add(.5, 1, -.5), Pointing.DOWN))
+        scene.overlay().showControls(turnPosition.add(.5, 1, -.5), Pointing.DOWN,35)
                 .rightClick()
-                .withItem(stackOf(ModItems.CONDUCTORS_WRENCH.get())), 35);
+                .withItem(stackOf(ModItems.CONDUCTORS_WRENCH.get()));
         scene.idle(35);
         scene.world().replaceBlocks(util.select().position(guideRailPos), guideRailRight, false);
 
@@ -215,9 +219,9 @@ public class TugScenes {
 
         scene.addKeyframe();
 
-        scene.overlay().showControls((new InputWindowElement(util.vector().topOf(of(4, 0, 4)), Pointing.DOWN))
+        scene.overlay().showControls(util.vector().topOf(of(4, 0, 4)), Pointing.DOWN,30)
                 .rightClick()
-                .withItem(stackOf(ModItems.CONDUCTORS_WRENCH.get())), 30);
+                .withItem(stackOf(ModItems.CONDUCTORS_WRENCH.get()));
 
         Block bargeDock = ModBlocks.BARGE_DOCK.get();
         BlockState orangeDock = bargeDock.defaultBlockState().setValue(DockingBlockStates.INVERTED, false);
