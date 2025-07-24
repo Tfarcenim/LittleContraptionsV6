@@ -4,16 +4,16 @@ plugins {
 }
 
 mixin {
-    add(sourceSets.main, "${mod_id}.refmap.json")
+   // add(sourceSets.main, "${mod_id}.refmap.json")
 
-    config("${mod_id}.mixins.json")
-    config("${mod_id}.forge.mixins.json")
+  //  config("${mod_id}.mixins.json")
+   // config("${mod_id}.forge.mixins.json")
 }
 
 legacyForge {
     version = "${minecraft_version}-${forge_version}"
 
-    validateAccessTransformers = true
+    validateAccessTransformers = false
 
     def at = project(':common').file('src/main/resources/META-INF/accesstransformer.cfg')
     if (at.exists()) {
@@ -47,12 +47,22 @@ sourceSets.main.resources.srcDir 'src/generated/resources'
 
 dependencies {
     compileOnly project(":common")
-    annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
+   // annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
+    implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
+    compileOnly group: 'org.jetbrains',name:'annotations',version: '24.1.0'
+
+    modImplementation "curse.maven:little-logistics-570050:4799459"
+    //cooked
+    //modImplementation("dev.murad.littlelogistics:littlelogistics:${ll_version}")
+    modCompileOnly("com.jozufozu.flywheel:${flywheel_version}")
+    modImplementation("curse.maven:create-328085:${curseforge_create_version}")
+
+    modCompileOnly("com.tterrag.registrate:Registrate:${registrate_version}")
 }
 
 jar {
     finalizedBy('reobfJar')
-    manifest.attributes([
-            "MixinConfigs": "${mod_id}.mixins.json,${mod_id}.forge.mixins.json"
-    ])
+   // manifest.attributes([
+   //         "MixinConfigs": "${mod_id}.mixins.json,${mod_id}.forge.mixins.json"
+   // ])
 }
