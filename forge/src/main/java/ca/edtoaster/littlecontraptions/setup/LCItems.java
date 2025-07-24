@@ -2,19 +2,11 @@ package ca.edtoaster.littlecontraptions.setup;
 
 import ca.edtoaster.littlecontraptions.entity.ContraptionBargeEntity;
 import dev.murad.shipping.item.VesselItem;
-import dev.murad.shipping.setup.ModBlocks;
-import dev.murad.shipping.setup.ModItems;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.util.List;
-import java.util.function.Supplier;
 
 public class LCItems {
 

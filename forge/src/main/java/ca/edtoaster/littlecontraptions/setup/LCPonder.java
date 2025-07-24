@@ -14,9 +14,12 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import dev.murad.shipping.setup.ModBlocks;
 import dev.murad.shipping.setup.ModItems;
+import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
+import net.createmod.ponder.foundation.PonderTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class LCPonder {
 
@@ -42,7 +45,7 @@ public class LCPonder {
     public static final ItemEntry<Item> LOCO_ROUTE_ENTRY = new ItemEntry<>(createRegistrate, ModItems.LOCO_ROUTE);
     public static final ItemEntry<Item> CONTRAPTION_BARGE_ENTRY = new ItemEntry<>(createRegistrate, LCItems.CONTRAPTION_BARGE_ITEM);
 
-    public static void register() {
+    public static void register(PonderTagRegistrationHelper<ResourceLocation> helper) {
         LC_TUGS = createPonderTag("tugs").item(ModItems.STEAM_TUG::get, true, false)
                 .defaultLang("Little Logistics Tugs",
                         "Water trains with pathfinding!").addToIndex();

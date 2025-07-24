@@ -64,6 +64,7 @@ repositories {
         name "ModMaven"
         url "https://modmaven.dev/"
     }
+    maven { url = "https://maven.createmod.net" } // Create, Ponder, Flywheel
 }
 
 // Declare capabilities on the outgoing configurations.

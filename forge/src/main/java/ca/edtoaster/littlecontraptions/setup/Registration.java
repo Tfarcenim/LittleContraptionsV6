@@ -1,13 +1,11 @@
 package ca.edtoaster.littlecontraptions.setup;
 
 import ca.edtoaster.littlecontraptions.LCMod;
-import com.tterrag.registrate.util.OneTimeEventReceiver;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -37,6 +35,6 @@ public class Registration {
         LCBlockEntityTypes.register();
         LCEntityTypes.register();
 
-        OneTimeEventReceiver.addListener(eventBus, FMLClientSetupEvent.class, (event) -> event.enqueueWork(LCPonder::register));
+        eventBus.addListener(LCPonder::register);
     }
 }
